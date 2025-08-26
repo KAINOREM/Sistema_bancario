@@ -1,6 +1,7 @@
 <html>	
     <body>
 		<?php
+		session_start();
 			$hostname = "127.0.0.1";
 			$user = "root";
 			$password = "";
