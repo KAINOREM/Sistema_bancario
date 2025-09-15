@@ -59,8 +59,9 @@ table td {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Mudança para flex-start para alinhar no topo */
     justify-content: space-between;
+    gap: 15px;
 }
 
 .cliente-item:hover {
@@ -70,8 +71,16 @@ table td {
 
 .cliente-info {
     display: flex;
+    flex-direction: column; /* Mudança para coluna para empilhar os elementos */
+    flex: 1; /* Ocupa o espaço disponível */
+    gap: 10px;
+}
+
+.cliente-info-linha {
+    display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite quebra de linha se necessário */
 }
 
 .cliente-id {
@@ -81,11 +90,28 @@ table td {
     border-radius: 20px;
     font-weight: bold;
     font-size: 14px;
+    flex-shrink: 0; /* Não encolhe */
 }
 
 .cliente-nome {
     font-size: 18px;
     font-weight: 500;
+    flex-shrink: 0; /* Não encolhe */
+}
+
+.cliente-dados {
+    opacity: 60%;
+    word-wrap: break-word; /* Permite quebra de palavra */
+    word-break: break-word; /* Quebra palavras longas */
+    width: 100%; /* Ocupa toda a largura disponível */
+    margin-top: 5px; /* Pequeno espaço acima */
+}
+
+.cliente-botoes {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0; /* Os botões não encolhem */
+    align-items: flex-start; /* Alinha no topo */
 }
 
 /* Botões */
@@ -127,24 +153,26 @@ button.excluir {
     box-shadow: 0 4px 6px rgba(229, 62, 62, 0.3);
     padding: 8px 16px;
     font-size: 14px;
+    margin: 0; /* Remove margem para alinhamento */
 }
 
 button.excluir:hover {
     background: linear-gradient(135deg, #fc8181 0%, #feb2b2 100%);
     box-shadow: 0 6px 12px rgba(229, 62, 62, 0.4);
 }
+
 button.cartao {
     background: linear-gradient(135deg, #3ee554 0%, #95fc81 100%);
     box-shadow: 0 4px 6px rgba(62, 229, 76, 0.3);
     padding: 8px 16px;
     font-size: 14px;
+    margin: 0; /* Remove margem para alinhamento */
 }
 
 button.cartao:hover {
     background: linear-gradient(135deg, #81fc91 0%, #bbfeb2 100%);
     box-shadow: 0 6px 12px rgba(62, 229, 98, 0.4);
 }
-
 
 /* Links principais */
 .links-principais {
@@ -206,9 +234,12 @@ center {
         gap: 15px;
     }
     
-    .cliente-info {
-        flex-direction: column;
-        gap: 10px;
+    .cliente-info-linha {
+        justify-content: center;
+    }
+    
+    .cliente-botoes {
+        justify-content: center;
     }
     
     .botao-principal {

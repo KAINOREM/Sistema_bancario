@@ -24,7 +24,7 @@
 				$resultado = $conexao->query($sql);
 				
 				$conexao -> close();
-				header('Location: index.php', true, 301);
+				header('Location: site.php', true, 301);
 			}
 		?>
 	</body>

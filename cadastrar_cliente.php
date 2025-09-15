@@ -23,7 +23,7 @@
                 </form>
                 
                 <div class="container-center">
-                    <a href="gerente.php" class="link-voltar">← Voltar ao Painel</a>
+                    <a href="site.php" class="link-voltar">← Voltar ao Painel</a>
                 </div>
             </div>
         </div>

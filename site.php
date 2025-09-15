@@ -31,37 +31,55 @@
             $conexao = new mysqli($hostname,$user,$password,$database);
 
             $sql="SELECT * FROM `sistema_bancario`.`cliente`
-            Where `idGerente` = '".$_SESSION['idGerente']."';";
+            Where `idGerente` = '".$_SESSION['idGerente']."' And `ativo` = 'S';";
 
             $resultado = $conexao->query($sql);
                 
             while($cliente = $resultado->fetch_assoc()) {
-                echo '<div class="cliente-item">';
-                echo '<div class="cliente-info">';
-                echo '<span class="cliente-id">' . $cliente['idCliente'] . '</span>';
-                echo '<span class="cliente-nome">' . $cliente['nome'] . '</span>';
-                echo '</div>';
-                echo '<div>';
-                echo '<form method="POST" action="excluirasdasdas_cliente.php" style="display:inline;">';
-                echo '<input type="hidden" name="idCliente" value="' . $cliente['idCliente'] . '">';
-                echo '<button type="submit" class="excluir" onclick="return confirm(\"Tem certeza que deseja excluir este cliente?\")">
-        			<img src="Imagens/lixeira.png" alt="Excluir" style="width: 38px; height: 38px;">
-     				</button>';
-				echo '<form method="POST" action="cadastrarASdasdasd_cliente.php" style="display:inline;">';
-                echo '<input type="hidden" name="idCliente" value="' . $cliente['idCliente'] . '">';
-                echo '<button type="submit" class="cartao" onclick="return confirm(\"Tem certeza que deseja cartao este cliente?\")">
-        			<img src="Imagens/cartao.png" alt="cartao" style="width: 38px; height: 38px;">
-     				</button>';
-                echo '</div>';
-                echo '</div>';
+     
+            $cartao="SELECT COALESCE(`ENDERECO`, '') as endereco, 
+            COALESCE(`numero_cartao`, '') as numero_cartao 
+            FROM `sistema_bancario`.`cartao`  WHERE `idCliente` = '".$cliente['idCliente']."';";
+            $visualizar = $conexao->query($cartao);
+
+            echo '<div class="cliente-item">';
+            echo '<div class="cliente-info">';
+            echo '<div class="cliente-info-linha">';
+            echo '<span class="cliente-id">' . $cliente['idCliente'] . '</span>';
+            echo '<span class="cliente-nome">'  . $cliente['nome'] . '</span>';
+            echo '</div>';
+
+            while($row2 = mysqli_fetch_array($visualizar)) {
+                echo '<div class="cliente-dados">Endereço: ' 
+                    . $row2[0] . ' | Número do cartão: ' 
+                    . $row2[1] . '</div>';
             }
+
+            echo '</div>';
+            echo '<div class="cliente-botoes">';
+            echo '<form method="POST" action="cadastrar_cartao.php" style="display:inline;">';
+            echo '<input type="hidden" name="idCliente_cartao" value="' . $cliente['idCliente'] . '">';
+            echo '<button type="submit" class="cartao" onclick="return confirm(\"Tem certeza que deseja cartao este cliente?\")">
+                <img src="Imagens/cartao.png" alt="cartao" style="width: 38px; height: 38px;">
+                </button></form>';
+
+            echo '<form method="POST" action="apagarBanco.php" style="display:inline;">';
+            echo '<input type="hidden" name="idCliente_apagar" value="' . $cliente['idCliente'] . '">';
+            echo '<button type="submit" class="excluir" onclick="return confirm(\"Tem certeza que deseja excluir este cliente?\")">
+                <img src="Imagens/lixeira.png" alt="Excluir" style="width: 38px; height: 38px;">
+                </button> </form>';
+            echo '</div>';
+            echo '</div>';
+        }
             
             $conexao -> close();
         ?>
         
         <div class="links-principais">
             <a href="cadastrar_cliente.php" class="botao-principal">Cadastrar Cliente</a>
-            <a href="cadastrar_cartao.php" class="botao-principal">Cadastrar Cartão</a>
+        </div>
+        <div class="links-principais">
+            <a href="index.php" class="botao-principal">Retornar</a>
         </div>
     </body>
 </html>
